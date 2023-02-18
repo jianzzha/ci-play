@@ -1,17 +1,16 @@
 name: sriov-e2e-test
 run-name: sriov-e2e-test initiated by ${{ github.actor }}
 on:
-  issue_comment:
+  pull_request_review_comment:
     types: [created]
 jobs:
   check-bats-version:
     runs-on: self-hosted
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/e2e-test') }}
+    if: contains(github.event.comment.body, '/e2e-test')
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: "refs/pull/${{ github.event.issue.number }}/head"
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
