@@ -1,0 +1,55 @@
+name: sriov-e2e-test
+run-name: sriov-e2e-test initiated by ${{ github.actor }}
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  check-bats-version:
+    runs-on: self-hosted
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/e2e-test') }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: "refs/pull/${{ github.event.issue.number }}/head"
+      - uses: actions/setup-python@v3
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f sriov/requirements.txt ]; then pip install -r sriov/requirements.txt; fi
+          pip install mock
+      - name: e2e test
+        working-directory: ${{ github.workspace }}
+        run: |
+          files=`git diff --name-only origin/main`
+          echo "diff files: $files"
+          pyfiles="conftest.py config.py configtestdata.py utils.py exec.py macros.py"
+          mode=""
+          tests=()
+          for f in ${files}; do
+            file=$(basename $f)
+            if [[ " ${pyfiles} " =~ " ${file} " ]]; then
+              mode="full"
+              break
+            elif [[ "$f" =~ "sriov/tests/" ]]; then
+              parentdir=$(dirname "$f")
+              testname=$(basename "${parentdir}")
+              tests+=("${testname}")
+            fi
+          done
+          cd sriov/tests
+          cp /config/*.yaml ./
+          if [[ "${mode}" == "full" ]]; then
+            pytest -v --html=report.html --self-contained-html SR_IOV_macAddress
+          elif [[ ${#tests[@]} -ne 0 ]]; then
+            for testname in $(echo "${tests[@]}" | tr ' ' '\n' | sort -u); do
+              echo "Testing ${testname}"
+            done
+          else
+            echo "no common code or test case code change - no e2e run"
+          fi
+      - name: Display HTML report
+        uses: pavi2410/html-preview-action@v2
+        with:
+          html_file: sriov/tests/report.html
+      - run: echo "This job's status is ${{ job.status }}."
