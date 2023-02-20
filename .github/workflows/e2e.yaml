@@ -1,12 +1,12 @@
 name: sriov-e2e-test
 run-name: sriov-e2e-test initiated by ${{ github.actor }}
 on:
-  pull_request_review_comment:
-    types: [created]
+  pull_request:
+    types: [labeled]
 jobs:
-  check-bats-version:
+  e2e-tests:
     runs-on: self-hosted
-    if: contains(github.event.comment.body, '/e2e-test')
+    if: contains(github.event.label.name, 'accept')
     steps:
       - uses: actions/checkout@v3
         with:
