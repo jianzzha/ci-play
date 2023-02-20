@@ -42,3 +42,5 @@ def test_SR_IOV_macAddressDuplicate(dut, settings):
 
     # check if vf 1 mac address is equal to mac_1
     assert verify_vf_address(dut, pf, 1, mac_1)
+
+    # Single test case CI run
