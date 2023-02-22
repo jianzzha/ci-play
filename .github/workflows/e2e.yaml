@@ -53,8 +53,9 @@ jobs:
           html_file: sriov/tests/report.html
       - run: echo "This job's status is ${{ job.status }}."
   remove-label:
-    permissions: write-all
-      #issues: write
+    needs: e2e-tests
+    permissions:
+      pull-requests: write
     runs-on: self-hosted
     if: contains(github.event.label.name, 'accept')
     steps:
