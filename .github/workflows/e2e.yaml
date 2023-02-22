@@ -47,12 +47,19 @@ jobs:
           else
             echo "no common code or test case code change - no e2e run"
           fi
-      - name: remove label
-        uses: andymckay/labeler@1.0.4
-        with:
-          remove-labels: "accept"
       - name: Display HTML report
         uses: pavi2410/html-preview-action@v2
         with:
           html_file: sriov/tests/report.html
       - run: echo "This job's status is ${{ job.status }}."
+  remove-label:
+    permissions:
+      issues: write
+    runs-on: self-hosted
+    if: contains(github.event.label.name, 'accept')
+    steps:
+      - name: remove label
+        uses: andymckay/labeler@1.0.4
+        with:
+          remove-labels: "accept"
+
