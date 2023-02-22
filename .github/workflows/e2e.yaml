@@ -56,6 +56,7 @@ jobs:
     needs: e2e-tests
     permissions:
       pull-requests: write
+      issues: write
     runs-on: self-hosted
     if: contains(github.event.label.name, 'accept')
     steps:
