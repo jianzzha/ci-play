@@ -61,7 +61,6 @@ jobs:
     if: contains(github.event.label.name, 'accept')
     steps:
       - name: remove label
-        uses: andymckay/labeler@1.0.4
-        with:
-          remove-labels: "accept"
+        run: |
+          curl --silent -X DELETE -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ github.token }}' 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels/accept'
 
