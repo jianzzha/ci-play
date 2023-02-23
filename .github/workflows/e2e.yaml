@@ -46,7 +46,7 @@ jobs:
               test_string="${test_string} ${testname}"
               echo "Testing ${testname}"
             done
-            echo "${test_string}"
+            ${test_string}
           else
             echo "no common code or test case code change - no e2e run"
           fi
