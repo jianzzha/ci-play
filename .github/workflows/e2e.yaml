@@ -58,7 +58,7 @@ jobs:
       pull-requests: write
       issues: write
     runs-on: self-hosted
-    if: contains(github.event.label.name, 'accept')
+    if: always() && contains(github.event.label.name, 'accept')
     steps:
       - name: remove label
         run: |
