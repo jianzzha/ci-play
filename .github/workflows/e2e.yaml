@@ -39,7 +39,7 @@ jobs:
           cd sriov/tests
           cp /config/*.yaml ./
           if [[ "${mode}" == "full" ]]; then
-            pytest -v --html=report.html --self-contained-html SR_IOV_macAddress
+            pytest -v --html=report.html --self-contained-html SR_IOV_BondVF_DPDK/test_SR_IOV_BondVF_DPDK.py::test_SR_IOV_BondVF_DPDK[dut_setup3]
           elif [[ ${#tests[@]} -ne 0 ]]; then
             for testname in $(echo "${tests[@]}" | tr ' ' '\n' | sort -u); do
               echo "Testing ${testname}"
