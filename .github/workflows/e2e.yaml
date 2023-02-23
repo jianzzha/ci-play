@@ -39,11 +39,14 @@ jobs:
           cd sriov/tests
           cp /config/*.yaml ./
           if [[ "${mode}" == "full" ]]; then
-            pytest -v --html=report.html --self-contained-html SR_IOV_BondVF_DPDK/test_SR_IOV_BondVF_DPDK.py::test_SR_IOV_BondVF_DPDK[dut_setup3]
+            pytest -v --html=report.html --self-contained-html SR_IOV_* common
           elif [[ ${#tests[@]} -ne 0 ]]; then
+            test_string = "pytest -v --html=report.html --self-contained-html "
             for testname in $(echo "${tests[@]}" | tr ' ' '\n' | sort -u); do
+              test_string+="${testname} "
               echo "Testing ${testname}"
             done
+            echo ${test_string}
           else
             echo "no common code or test case code change - no e2e run"
           fi
