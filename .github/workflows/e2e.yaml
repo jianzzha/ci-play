@@ -6,7 +6,7 @@ on:
 jobs:
   e2e-tests:
     runs-on: self-hosted
-    if: contains(github.event.label.name, 'accept')
+    if: contains(github.event.label.name, 'e2e-test')
     steps:
       - uses: actions/checkout@v3
         with:
@@ -61,7 +61,7 @@ jobs:
       pull-requests: write
       issues: write
     runs-on: self-hosted
-    if: always() && contains(github.event.label.name, 'accept')
+    if: always() && contains(github.event.label.name, 'e2e-test')
     steps:
       - name: remove label
         run: |
