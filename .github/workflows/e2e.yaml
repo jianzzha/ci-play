@@ -65,4 +65,4 @@ jobs:
     steps:
       - name: remove label
         run: |
-          curl --silent -X DELETE -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ github.token }}' 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels/accept'
+          curl --silent -X DELETE -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ github.token }}' 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels/e2e-test'
