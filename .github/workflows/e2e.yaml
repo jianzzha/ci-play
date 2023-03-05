@@ -7,7 +7,7 @@ on:
 jobs:
   e2e-tests:
     runs-on: self-hosted
-    if: contains(github.event.label.name, 'e2e-test')
+    if: github.event_name == 'pull_request' && contains(github.event.label.name, 'e2e-test')
     steps:
       - uses: actions/checkout@v3
         with:
