@@ -1,6 +1,6 @@
 # SR-IOV Tests for RHEL
 
-## Test Connections
+### Test Connections
 
 ![alt text](/docs/images/SRIOV_RHEL_Test_Toplogy.jpg)
 
