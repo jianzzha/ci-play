@@ -6,6 +6,7 @@ from sriov.common.utils import (
 )
 
 
+# This line is added for e2e test
 def test_SR_IOV_macAddress(dut, trafficgen, settings, testdata):
     """Test and ensure that VF MAC address functions as intended
 
